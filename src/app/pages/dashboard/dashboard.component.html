@@ -1,0 +1,119 @@
+<div class="row">
+  <div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="card card-stats">
+      <div class="card-body ">
+        <div class="row">
+          <div class="col-5 col-md-4">
+            <div class="icon-big text-center icon-warning">
+              <i class="nc-icon nc-bullet-list-67 text-warning"></i>
+            </div>
+          </div>
+          <div class="col-7 col-md-8">
+            <div class="numbers">
+              <p class="card-category">Reservados</p>
+              <p class="card-title">{{dashboardDatos.CantidadReserva}} <p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer " style="cursor:pointer" (click)="getDataDashboard()">
+        <hr>
+        <div class="stats">
+          <i class="fa fa-refresh"></i> Actualizar
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="card card-stats">
+      <div class="card-body ">
+        <div class="row">
+          <div class="col-5 col-md-4">
+            <div class="icon-big text-center icon-warning">
+              <i class="nc-icon nc-bullet-list-67 text-success"></i>
+            </div>
+          </div>
+          <div class="col-7 col-md-8">
+            <div class="numbers">
+              <p class="card-category">Disponibles</p>
+              <p class="card-title">{{dashboardDatos.CantidadDisponibles}}
+<p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer " style="cursor:pointer" (click)="getDataDashboard()">
+        <hr>
+        <div class="stats">
+          <i class="fa fa-refresh"></i> Actualizar
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="card card-stats">
+      <div class="card-body ">
+        <div class="row">
+          <div class="col-5 col-md-4">
+            <div class="icon-big text-center icon-warning">
+              <i class="nc-icon nc-simple-remove text-danger"></i>
+            </div>
+          </div>
+          <div class="col-7 col-md-8">
+            <div class="numbers">
+              <p class="card-category">En mora</p>
+              <p class="card-title">{{dashboardDatos.CantidadMora}}
+<p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer " style="cursor:pointer" (click)="getDataDashboard()">
+        <hr>
+        <div class="stats">
+          <i class="fa fa-refresh"></i> Actualizar
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="card card-stats">
+      <div class="card-body ">
+        <div class="row">
+          <div class="col-5 col-md-4">
+            <div class="icon-big text-center icon-warning">
+              <i class="nc-icon nc-single-02 text-primary"></i>
+            </div>
+          </div>
+          <div class="col-7 col-md-8">
+            <div class="numbers">
+              <p class="card-category">Usuarios</p>
+              <p class="card-title">{{dashboardDatos.CantidadUsuarios}}
+<p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer " style="cursor:pointer" (click)="getDataDashboard()">
+        <hr>
+        <div class="stats" >
+          <i class="fa fa-refresh"></i> Actualizar
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="card ">
+      <div class="card-header ">
+        <h5 class="card-title">Comportamiento de entregas</h5>
+        <p class="card-category">Ultima semana</p>
+      </div>
+      <div class="card-body ">
+        <canvas id=chartHours width="400" height="100"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+

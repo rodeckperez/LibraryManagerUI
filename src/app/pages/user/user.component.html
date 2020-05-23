@@ -1,0 +1,152 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Usuarios</h4>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive" style="max-height:390px; overflow-y:scroll">
+          <table class="table">
+            <thead class=" text-primary">
+            <th>
+              Ver
+            </th>
+            <th>
+              Nombre
+            </th>
+            <th>
+              Apellidos
+            </th>
+            <th>
+              Tipo
+            </th>
+            <th class="text-right">
+              Documento
+            </th>
+            <th class="text-right">
+              Direccion
+            </th>
+            <th class="text-right">
+              Telefono
+            </th>
+            <th class="text-right">
+              Estado
+            </th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of lstUsuarios">
+                <td style="width:5%" (click)="verUsuario(user)"><img src="https://cdn1.iconfinder.com/data/icons/material-set-5/48/404-512.png" style="width:50%"></td>
+                <td>
+                  {{user.Nombres}}
+                </td>
+                <td>
+                  {{user.Apellidos}}
+                </td>
+                <td>
+                  {{getTipoDoc(user.IdTipoDocumento)}}
+                </td>
+                <td class="text-right">
+                  {{user.NumeroIdentificacion}}
+                </td>
+                <td class="text-right">
+                  {{user.Direccion}}
+                </td>
+                <td class="text-right">
+                  {{user.Telefono}}
+                </td>
+                <td class="text-right">
+                  {{getEstado(user.Estado)}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <div class="card card-user">
+      <div class="card-header">
+        <h5 class="card-title">Información de usuario</h5>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="angForm">
+          <div class="row">
+            <div class="col-md-6 pr-1">
+              <div class="form-group">
+                <label>Nombres</label>
+                <input type="text" class="form-control" placeholder="Nombres" formControlName="nombres">
+              </div>
+            </div>
+            <div class="col-md-6 pl-1">
+              <div class="form-group">
+                <label>Apellidos</label>
+                <input type="text" class="form-control" placeholder="Apellidos" formControlName="apellidos">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Dirección</label>
+                <input type="text" class="form-control" placeholder="Direccion" formControlName="direccion">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-2 pr-1">
+              <div class="form-group">
+                <label>Tipo Documento</label>
+                <select class="form-control" formControlName="tipodoc">
+                  <option>Seleccione</option>
+                  <option *ngFor="let docs of lstTIpoDocumento">{{docs.Tipo}}</option>
+                </select>
+
+              </div>
+            </div>
+            <div class="col-md-4 px-1">
+              <div class="form-group">
+                <label>Documento</label>
+                <input type="text" class="form-control" placeholder="Documento" formControlName="documento">
+              </div>
+            </div>
+            <div class="col-md-6 pl-1">
+              <div class="form-group">
+                <label>Telefono</label>
+                <input type="number" class="form-control" placeholder="Telefono" formControlName="telefono">
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngIf="peticionDatos">
+            <div class="col-md-12 px-1">
+              <div *ngIf="!estadoSolicitud" class="alert alert-danger alert-dismissible fade show">
+                <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+                  <i class="nc-icon nc-simple-remove" (click)="peticionDatos = false"></i>
+                </button>
+                <span>
+                  <b> Error - </b> No se pudo guardar la informacion del usuario, por favor intente más tarde
+                </span>
+              </div>
+            </div>
+            <div class="col-md-12 px-1">
+              <div *ngIf="estadoSolicitud" class="alert alert-success alert-dismissible fade show">
+                <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+                  <i class="nc-icon nc-simple-remove" (click)="peticionDatos = false"></i>
+                </button>
+                <span>
+                  <b> Exito - </b> La información fue almacenada
+                </span>
+              </div>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="update ml-auto mr-auto">
+              <button type="submit" class="btn btn-primary btn-round" (click)="guardarUsuario()">Guardar Información</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

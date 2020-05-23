@@ -1,0 +1,85 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Categorias</h4>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive" style="max-height:390px; overflow-y:scroll">
+          <table class="table">
+            <thead class=" text-primary">
+            <th>
+              Ver
+            </th>
+            <th>
+              Nombre
+            </th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let categorie of lsCategories">
+                <td style="width:5%" (click)="verCategoria(categorie)"><img src="https://cdn1.iconfinder.com/data/icons/material-set-5/48/404-512.png" style="width:50%"></td>
+                <td>
+                  {{categorie.Nombre}}
+                </td>
+               </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div> <div class="col-md-12">
+    <div class="card card-user">
+      <div class="card-header">
+        <h5 class="card-title">Información de la categoria</h5>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="categorieForm">
+          <div class="row">
+            <div class="col-md-12 pr-1">
+              <div class="form-group">
+                <label>Nombre</label>
+                <input type="text" class="form-control" placeholder="Nombre" formControlName="nombre">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 pr-1">
+              <div class="form-group">
+                <label>Descripcion</label>
+                <textarea class="form-control textarea" formControlName="descripcion"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngIf="peticionDatos">
+            <div class="col-md-12 px-1">
+              <div *ngIf="!estadoSolicitud" class="alert alert-danger alert-dismissible fade show">
+                <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+                  <i class="nc-icon nc-simple-remove" (click)="peticionDatos = false"></i>
+                </button>
+                <span>
+                  <b> Error - </b> No se pudo guardar la informacion de la categoria, por favor intente más tarde
+                </span>
+              </div>
+            </div>
+            <div class="col-md-12 px-1">
+              <div *ngIf="estadoSolicitud" class="alert alert-success alert-dismissible fade show">
+                <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+                  <i class="nc-icon nc-simple-remove" (click)="peticionDatos = false"></i>
+                </button>
+                <span>
+                  <b> Exito - </b> La información fue almacenada
+                </span>
+              </div>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="update ml-auto mr-auto">
+              <button type="submit" class="btn btn-primary btn-round" (click)="guardarCategoria()">Guardar Información</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,209 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Libros</h4>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead class=" text-primary">
+            <th>
+              Ver
+            </th>
+            <th>
+              Nombre
+            </th>
+            <th>
+              Idioma
+            </th>
+            <th>
+              Disponibilidad
+            </th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let libro of lsLibros">
+                <td style="width:5%" (click)="verLibro(libro)"><img src="https://cdn1.iconfinder.com/data/icons/material-set-5/48/404-512.png" style="width:50%"></td>
+                <td>
+                  {{libro.Nombre}}
+                </td>
+                <td>
+                  {{libro.Idioma}}
+                </td>
+                <td>
+                  {{getEstado(libro.Disponible)}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <div class="card card-user">
+      <div class="card-header">
+        <h5 class="card-title">Información del libro</h5>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="libroForm">
+          <div class="row">
+            <div class="col-md-6 pr-1">
+              <div class="form-group">
+                <label>Nombres</label>
+                <input type="text" class="form-control" placeholder="Nombre" formControlName="nombre">
+              </div>
+            </div>
+            <div class="col-md-6 pr-1">
+              <div class="form-group">
+                <label>Idioma</label>
+                <select class="form-control" formControlName="idioma">
+                  <option disabled>Seleccione</option>
+                  <option *ngFor="let idioma of lsIdioma" [value]="idioma.Id">{{idioma.Nombre}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 pr-1">
+              <div class="form-group">
+                <label>Autores</label>
+                <select class="form-control" formControlName="autor" (change)='autorSelected($event)'>
+                  <option disabled>Seleccione</option>
+                  <option *ngFor="let autors of lsAutores" [value]="autors.IdAutor">{{autors.Nombres}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4 pr-1">
+              <div class="form-group">
+                <label>Editorial</label>
+                <select class="form-control" formControlName="editorial" (change)='editorialSelected($event)'>
+                  <option disabled>Seleccione</option>
+                  <option *ngFor="let editorial of lsEditoriales" [value]="editorial.IdEditorial">{{editorial.NombreEditorial}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4 pr-1">
+              <div class="form-group">
+                <label>Categoria</label>
+                <select class="form-control" formControlName="categoria" (change)='categoriaSelected($event)'>
+                  <option disabled>Seleccione</option>
+                  <option *ngFor="let categorie of lsCategorias" [value]="categorie.IdCategoria">{{categorie.Nombre}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 pr-1">
+              <div class="form-group">
+                <label>Sinapsis</label>
+                <textarea class="form-control textarea" formControlName="sinapsis"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngIf="peticionDatos">
+            <div class="col-md-12 px-1">
+              <div *ngIf="!estadoSolicitud" class="alert alert-danger alert-dismissible fade show">
+                <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+                  <i class="nc-icon nc-simple-remove" (click)="peticionDatos = false"></i>
+                </button>
+                <span>
+                  <b> Error - </b> No se pudo guardar la informacion del libro, por favor intente más tarde
+                </span>
+              </div>
+            </div>
+            <div class="col-md-12 px-1">
+              <div *ngIf="estadoSolicitud" class="alert alert-success alert-dismissible fade show">
+                <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+                  <i class="nc-icon nc-simple-remove" (click)="peticionDatos = false"></i>
+                </button>
+                <span>
+                  <b> Exito - </b> La información fue almacenada
+                </span>
+              </div>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="update ml-auto mr-auto">
+              <button type="submit" class="btn btn-primary btn-round" (click)="guardarLibro()">Guardar Información</button>
+            </div>
+          </div>
+          <div class="row" *ngIf="enableBooking">
+            <div class="update ml-auto mr-auto">
+              <button type="submit" class="btn btn-primary btn-round" (click)="iniciarReserva()">Reservar este libro</button>
+            </div>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-12" *ngIf="showFormReserva">
+    <div class="card card-user">
+      <div class="card-header">
+        <h5 class="card-title">Datos de reserva</h5>
+      </div>
+      <div class="card-body">
+        <span>La reserva inicia a partir de este día</span>
+        <div class="card-body">
+          <form [formGroup]="reservaForm">
+            <div class="row">
+              <div class="col-md-6 pr-1">
+                <div class="form-group">
+                  <label>Fin de la reserva</label>
+                  <input type="date" class="form-control" (change)="onMyDateChange($event)" formControlName="fechaFin" value="{{ post.startDate | date:'yyyy-MM-dd' }}" />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 pr-1">
+                <div class="form-group">
+                  <label>Tipo Documento</label>
+                  <select class="form-control" formControlName="tipodoc">
+                    <option>Seleccione</option>
+                    <option *ngFor="let docs of lstTIpoDocumento">{{docs.Tipo}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-8 px-1">
+                <div class="form-group">
+                  <label>Documento</label>
+                  <input type="text" class="form-control" placeholder="Documento" formControlName="documento">
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="peticionDatosReserva">
+              <div class="col-md-12 px-1">
+                <div *ngIf="!estadoSolicitudReserva" class="alert alert-danger alert-dismissible fade show">
+                  <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+                    <i class="nc-icon nc-simple-remove" (click)="peticionDatosReserva = false"></i>
+                  </button>
+                  <span>
+                    <b> Error - </b> No se pudo guardar la informacion del libro, por favor intente más tarde
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-12 px-1">
+                <div *ngIf="estadoSolicitudReserva" class="alert alert-success alert-dismissible fade show">
+                  <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+                    <i class="nc-icon nc-simple-remove" (click)="peticionDatosReserva = false"></i>
+                  </button>
+                  <span>
+                    <b> Exito - </b> La información fue almacenada
+                  </span>
+                </div>
+              </div>
+
+            </div>
+            <div class="row">
+              <div class="update ml-auto mr-auto">
+                <button type="submit" class="btn btn-primary btn-round" (click)="reservarLibro()">Reservar Libro</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
