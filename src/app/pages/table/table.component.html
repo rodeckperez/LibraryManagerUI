@@ -176,17 +176,7 @@
             </div>
             <div class="row" *ngIf="peticionDatosReserva">
               <div class="col-md-12 px-1">
-                <div *ngIf="!estadoSolicitudReserva" class="alert alert-danger alert-dismissible fade show">
-                  <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
-                    <i class="nc-icon nc-simple-remove" (click)="peticionDatosReserva = false"></i>
-                  </button>
-                  <span>
-                    <b> Error - </b> No se pudo guardar la informacion del libro, por favor intente más tarde
-                  </span>
-                </div>
-              </div>
-              <div class="col-md-12 px-1">
-                <div *ngIf="estadoSolicitudReserva" class="alert alert-success alert-dismissible fade show">
+                 <div class="alert alert-success alert-dismissible fade show">
                   <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
                     <i class="nc-icon nc-simple-remove" (click)="peticionDatosReserva = false"></i>
                   </button>
